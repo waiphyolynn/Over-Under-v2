@@ -11,8 +11,8 @@
     nav a { color: #fff; margin: 0 15px; text-decoration: none; }
     .container { padding: 20px; max-width: 800px; margin: auto; }
     .form-section, .admin-note, table { background: #1f1f1f; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px #00ff88; margin-bottom: 30px; }
-    .form-section input { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none; }
-    .form-section button { padding: 10px 20px; background: #00ff88; border: none; border-radius: 5px; cursor: pointer; }
+    .form-section input, #adminLogin input { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none; }
+    .form-section button, #adminLogin button { padding: 10px 20px; background: #00ff88; border: none; border-radius: 5px; cursor: pointer; }
     table { width: 100%; border-collapse: collapse; }
     th, td { border: 1px solid #333; padding: 10px; text-align: center; }
     th { background: #222; color: #00ff88; }
@@ -32,10 +32,15 @@
 
   <div class="container">
     <div class="admin-note">
-      * This tip list is managed by <strong>Admin Only</strong>. Add new daily tips using the form below.
+      * This tip list is managed by <strong>Admin Only</strong>. Enter password to unlock the form.
     </div>
 
-    <div class="form-section">
+    <div id="adminLogin">
+      <input type="password" id="adminPass" placeholder="Enter admin password" />
+      <button onclick="verifyPassword()">Unlock</button>
+    </div>
+
+    <div class="form-section" id="tipForm" style="display:none;">
       <h3>Add New Tip</h3>
       <input type="text" id="date" placeholder="Date (e.g. Apr 5, 2025)" />
       <input type="text" id="match" placeholder="Match (e.g. Liverpool vs Man City)" />
@@ -77,6 +82,18 @@
   <footer>&copy; 2025 Over Under. All rights reserved.</footer>
 
   <script>
+    const correctPassword = "waigyi2025";
+
+    function verifyPassword() {
+      const input = document.getElementById('adminPass').value;
+      if (input === correctPassword) {
+        document.getElementById('tipForm').style.display = 'block';
+        document.getElementById('adminLogin').style.display = 'none';
+      } else {
+        alert('Incorrect password!');
+      }
+    }
+
     function addTip() {
       const date = document.getElementById('date').value;
       const match = document.getElementById('match').value;
